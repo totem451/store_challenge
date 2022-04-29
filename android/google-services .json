@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "210898926386",
+    "project_id": "createthrivestore",
+    "storage_bucket": "createthrivestore.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210898926386:android:2f83ac36b3e3571db9352b",
+        "android_client_info": {
+          "package_name": "com.CreateThrive.store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210898926386-njgp9u3hu2e7dtpakb2nhlikpu6pmo8d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEQXMO52q0h8tXYELjdfdJf6gb8EpDB7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210898926386-njgp9u3hu2e7dtpakb2nhlikpu6pmo8d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
