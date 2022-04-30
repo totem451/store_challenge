@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class Category {
-  Category({
+class CategoryModel {
+  CategoryModel({
     required this.name,
     required this.color,
     required this.id,
@@ -11,11 +11,12 @@ class Category {
   String color;
   int id;
 
-  factory Category.fromJson(String str) => Category.fromMap(json.decode(str));
+  factory CategoryModel.fromJson(String str) =>
+      CategoryModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Category.fromMap(Map<String, dynamic> json) => Category(
+  factory CategoryModel.fromMap(Map<String, dynamic> json) => CategoryModel(
         name: json["name"],
         color: json["color"],
         id: json["id"],
@@ -27,7 +28,7 @@ class Category {
         "id": id,
       };
 
-  Category copy() => Category(
+  CategoryModel copy() => CategoryModel(
         name: this.name,
         color: this.color,
         id: this.id,

@@ -8,6 +8,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   http: ^0.13.3
+  auto_size_text: ^3.0.0
+  bloc: any
+  equatable:
+  flutter_bloc: ^8.0.1
 
 dev_dependencies:
   flutter_test:

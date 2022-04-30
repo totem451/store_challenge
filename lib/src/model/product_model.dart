@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class Product {
-  Product({
+class ProductModel {
+  ProductModel({
     required this.name,
     this.image,
     required this.category,
@@ -13,11 +13,12 @@ class Product {
   int category;
   int id;
 
-  factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
+  factory ProductModel.fromJson(String str) =>
+      ProductModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Product.fromMap(Map<String, dynamic> json) => Product(
+  factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
         name: json["name"],
         image: json["image"],
         category: json["category"],
@@ -31,7 +32,7 @@ class Product {
         "id": id,
       };
 
-  Product copy() => Product(
+  ProductModel copy() => ProductModel(
         name: this.name,
         image: this.image,
         category: this.category,
