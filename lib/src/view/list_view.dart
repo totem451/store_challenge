@@ -4,12 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_challenge/src/bloc/bloc.dart';
 import 'package:store_challenge/src/model/models.dart';
 import 'package:store_challenge/src/service/services.dart';
+import 'package:store_challenge/src/view/create_view.dart';
 import 'package:store_challenge/src/view/loading_view.dart';
 
 class ListProductsView extends StatefulWidget {
-  const ListProductsView({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const ListProductsView({Key? key}) : super(key: key);
 
   @override
   State<ListProductsView> createState() => _ListProductsViewState();
@@ -73,7 +72,7 @@ class _ListProductsViewState extends State<ListProductsView> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         title: Text(
-          widget.title,
+          'Store',
           // style: TextStyle(color: Colors.black),
         ),
       ),
@@ -103,9 +102,23 @@ class _ListProductsViewState extends State<ListProductsView> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () => Navigator.pushNamed(context, '/favorites'),
+            child: const Icon(Icons.favorite),
+            heroTag: 'btn1',
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: () => Navigator.pushNamed(context, '/create'),
+            child: const Icon(Icons.add),
+            heroTag: 'btn2',
+          ),
+        ],
       ),
     );
   }

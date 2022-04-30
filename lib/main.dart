@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:store_challenge/src/view/create_view.dart';
+import 'package:store_challenge/src/view/favorites_view.dart';
 import 'package:store_challenge/src/view/views.dart';
 
 void main() {
@@ -13,10 +15,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Store App',
+      routes: {
+        '/list': (context) => const ListProductsView(),
+        '/create': (context) => CreateView(),
+        '/favorites': (context) => FavoritesView(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ListProductsView(title: 'Store'),
+      home: const ListProductsView(),
     );
   }
 }
