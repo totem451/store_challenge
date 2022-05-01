@@ -2,16 +2,16 @@ import 'dart:convert';
 
 class ProductModel {
   ProductModel({
-    required this.name,
+    this.name,
     this.image,
-    required this.category,
-    required this.id,
+    this.category,
+    this.id,
   });
 
-  String name;
+  String? name;
   String? image;
-  int category;
-  int id;
+  int? category;
+  int? id;
 
   factory ProductModel.fromJson(String str) =>
       ProductModel.fromMap(json.decode(str));

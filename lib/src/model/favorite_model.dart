@@ -2,10 +2,10 @@ import 'dart:convert';
 
 class FavoriteModel {
   FavoriteModel({
-    required this.product,
+    this.id,
   });
 
-  int product;
+  int? id;
 
   factory FavoriteModel.fromJson(String str) =>
       FavoriteModel.fromMap(json.decode(str));
@@ -13,14 +13,14 @@ class FavoriteModel {
   String toJson() => json.encode(toMap());
 
   factory FavoriteModel.fromMap(Map<String, dynamic> json) => FavoriteModel(
-        product: json["product"],
+        id: json["id"],
       );
 
   Map<String, dynamic> toMap() => {
-        "product": product,
+        "id": id,
       };
 
   FavoriteModel copy() => FavoriteModel(
-        product: this.product,
+        id: this.id,
       );
 }

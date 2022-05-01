@@ -2,14 +2,14 @@ import 'dart:convert';
 
 class CategoryModel {
   CategoryModel({
-    required this.name,
-    required this.color,
-    required this.id,
+    this.name,
+    this.color,
+    this.id,
   });
 
-  String name;
-  String color;
-  int id;
+  String? name;
+  String? color;
+  int? id;
 
   factory CategoryModel.fromJson(String str) =>
       CategoryModel.fromMap(json.decode(str));

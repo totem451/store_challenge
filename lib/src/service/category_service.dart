@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class CategoryService {
   final String url =
-      'https://createthrivestore-default-rtdb.firebaseio.com/product.json';
+      'https://createthrivestore-default-rtdb.firebaseio.com/category.json';
   Future<List<CategoryModel>> listCategories() async {
     List<CategoryModel> categories = [];
     var resp = await http.get(Uri.parse(url));
