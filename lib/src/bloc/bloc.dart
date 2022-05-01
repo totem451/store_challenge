@@ -9,25 +9,14 @@ class BLOC extends Bloc<EventS, StateS> {
   final productService = ProductService();
   final categoryService = CategoryService();
   final favoriteService = FavoriteService();
-  BLOC() : super(InitialState()) {
-    on<EventS>((event, emit) async {
-      if (event is InitialEvent) {
-        emit(InitialState());
-      }
-      if (event is LoaderProductsAndCategoriesEvent) {
-        emit(InitialState());
-        late List<ProductModel> products;
-        late List<CategoryModel> categories;
-        products = await productService.listProducts();
-        categories = await categoryService.listCategories();
-        emit(LoaderProductsAndCategoriesState(products, categories));
-      }
-      if (event is LoaderFavoritesEvent) {
-        emit(InitialState());
-        late List<FavoriteModel> favorites;
-        favorites = await favoriteService.listFavorites();
-        emit(LoaderFavoritesState(favorites));
-      }
-    });
+  BLOC(StateS initialState) : super(initialState) {
+    on<LoadDataEvent>(loadData);
+  }
+  void loadData(event, emit) async {
+    emit(InitialState());
+    List<FavoriteModel> favorites = await favoriteService.listFavorites();
+    List<ProductModel> products = await productService.listProducts();
+    List<CategoryModel> categories = await categoryService.listCategories();
+    emit(LoadDataState(products, categories, favorites));
   }
 }

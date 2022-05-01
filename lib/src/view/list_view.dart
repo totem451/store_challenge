@@ -1,11 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// ignore_for_file: unnecessary_new
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_challenge/src/bloc/bloc.dart';
-import 'package:store_challenge/src/model/models.dart';
 import 'package:store_challenge/src/service/services.dart';
-import 'package:store_challenge/src/view/create_view.dart';
-import 'package:store_challenge/src/view/loading_view.dart';
 
 class ListProductsView extends StatefulWidget {
   const ListProductsView({Key? key}) : super(key: key);
@@ -17,10 +15,11 @@ class ListProductsView extends StatefulWidget {
 class _ListProductsViewState extends State<ListProductsView> {
   final productService = ProductService();
   final categoryService = CategoryService();
-  final bloc = BLOC();
+  late BLOC bloc;
   @override
   void initState() {
-    // TODO: implement initState
+    bloc = new BLOC(StateS());
+    bloc.add(LoadDataEvent());
     super.initState();
   }
 
@@ -78,29 +77,40 @@ class _ListProductsViewState extends State<ListProductsView> {
       ),
       body: Container(
         color: Color.fromARGB(255, 46, 46, 46),
-        child: ListView(
-          children: [
-            BlocListener(
-              bloc: bloc,
-              listener: (context, state) {},
-              child: BlocBuilder(
+        child: Stack(children: [
+          ListView(
+            children: [
+              BlocListener(
                 bloc: bloc,
-                builder: (context, state) {
-                  if (state is InitialState) {
-                    // return LoadingScreen();
-                    return Text('loading');
-                  }
-                  if (state is LoaderProductsAndCategoriesState) {
-                    // return generateProductsAndCategories(
-                    //     state.products, state.categories);
-                    return Text('list');
-                  }
-                  return Container();
-                },
-              ),
-            )
-          ],
-        ),
+                listener: (context, state) {},
+                child: BlocBuilder(
+                  bloc: bloc,
+                  builder: (context, state) {
+                    if (state is InitialState) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                      ));
+                      // return Text(
+                      //   'loading',
+                      //   style: TextStyle(color: Colors.red),
+                      // );
+                    }
+                    if (state is LoadDataState) {
+                      // return generateProductsAndCategories(
+                      //     state.products, state.categories);
+                      return Text(
+                        'list',
+                        style: TextStyle(color: Colors.red),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              )
+            ],
+          ),
+        ]),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

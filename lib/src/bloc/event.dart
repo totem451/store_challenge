@@ -9,17 +9,8 @@ class InitialEvent extends EventS {
   List<Object> get props => [];
 }
 
-class LoaderProductsAndCategoriesEvent extends EventS {
-  final List<ProductModel> products;
-  final List<CategoryModel> categories;
-  LoaderProductsAndCategoriesEvent(this.products, this.categories);
+class LoadDataEvent extends EventS {
+  LoadDataEvent();
   @override
-  List<Object> get props => [products, categories];
-}
-
-class LoaderFavoritesEvent extends EventS {
-  final List<FavoriteModel> favorites;
-  LoaderFavoritesEvent(this.favorites);
-  @override
-  List<Object> get props => [favorites];
+  List<Object> get props => [];
 }

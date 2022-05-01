@@ -1,7 +1,11 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 part of 'bloc.dart';
 
-abstract class StateS extends Equatable {
+class StateS extends Equatable {
   const StateS();
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }
 
 class InitialState extends StateS {
@@ -9,17 +13,11 @@ class InitialState extends StateS {
   List<Object> get props => [];
 }
 
-class LoaderProductsAndCategoriesState extends StateS {
+class LoadDataState extends StateS {
   final List<ProductModel> products;
   final List<CategoryModel> categories;
-  LoaderProductsAndCategoriesState(this.products, this.categories);
-  @override
-  List<Object> get props => [products, categories];
-}
-
-class LoaderFavoritesState extends StateS {
   final List<FavoriteModel> favorites;
-  LoaderFavoritesState(this.favorites);
+  LoadDataState(this.products, this.categories, this.favorites);
   @override
-  List<Object> get props => [favorites];
+  List<Object> get props => [products, categories, favorites];
 }
