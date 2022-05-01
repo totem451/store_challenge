@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_challenge/src/bloc/bloc.dart';
@@ -35,34 +36,42 @@ class _ListProductsViewState extends State<ListProductsView> {
   generateProductsAndCategories(products, categories) {
     List<Widget> list = [];
     categories.forEach((category) {
-      list.add(InkWell(
-        onTap: () {},
-        child: Padding(
-          child: Row(
-            children: <Widget>[
-              Padding(
-                child: Text(category.name),
-                // child: AutoSizeText(
-                //   '${category.name}',
-                //   minFontSize: 5,
-                //   style: TextStyle(
-                //       fontFamily: "Roboto",
-                //       color: Color(0xFF767676),
-                //       fontSize: 13),
-                // ),
-                padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.04),
-              ),
-            ],
+      products.forEach((product) {
+        List<Widget> productsList = [];
+        if (product.category == category.id) {
+          productsList.add(
+            Text(product.name),
+          );
+        }
+        list.add(InkWell(
+          onTap: () => Dialog(child: Column(children: productsList)),
+          child: Padding(
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  child: AutoSizeText(
+                    '${category.name}',
+                    minFontSize: 5,
+                    style: TextStyle(
+                        fontFamily: "Roboto",
+                        color: toColor(category.color),
+                        fontSize: 15),
+                  ),
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width * 0.04),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.007,
+                top: MediaQuery.of(context).size.height * 0.007,
+                left: MediaQuery.of(context).size.width * 0.02,
+                right: MediaQuery.of(context).size.width * 0.02),
           ),
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.007,
-              top: MediaQuery.of(context).size.height * 0.007,
-              left: MediaQuery.of(context).size.width * 0.02,
-              right: MediaQuery.of(context).size.width * 0.02),
-        ),
-      ));
+        ));
+      });
     });
+    return Column(children: list);
   }
 
   @override
@@ -91,18 +100,10 @@ class _ListProductsViewState extends State<ListProductsView> {
                           child: CircularProgressIndicator(
                         strokeWidth: 2,
                       ));
-                      // return Text(
-                      //   'loading',
-                      //   style: TextStyle(color: Colors.red),
-                      // );
                     }
                     if (state is LoadDataState) {
-                      // return generateProductsAndCategories(
-                      //     state.products, state.categories);
-                      return Text(
-                        'list',
-                        style: TextStyle(color: Colors.red),
-                      );
+                      return generateProductsAndCategories(
+                          state.products, state.categories);
                     }
                     return Container();
                   },
