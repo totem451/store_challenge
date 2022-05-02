@@ -4,8 +4,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_challenge/src/bloc/bloc.dart';
+import 'package:store_challenge/src/model/category_model.dart';
 import 'package:store_challenge/src/model/favorite_model.dart';
+import 'package:store_challenge/src/model/models.dart';
 import 'package:store_challenge/src/service/services.dart';
+import 'package:store_challenge/src/view/create_view.dart';
 import 'package:store_challenge/src/view/favorites_view.dart';
 
 class ListProductsView extends StatefulWidget {
@@ -19,6 +22,8 @@ class _ListProductsViewState extends State<ListProductsView> {
   final productService = ProductService();
   final categoryService = CategoryService();
   final favoriteService = FavoriteService();
+  late List<CategoryModel> categories;
+  late List<ProductModel> products;
   late BLOC bloc;
   @override
   void initState() {
@@ -36,9 +41,15 @@ class _ListProductsViewState extends State<ListProductsView> {
     }
   }
 
-  generateProducts(categoryId, products) {
+  generateProducts(categoryId, products, favorites) {
     List<Widget> list = [];
+    bool isFavorite = false;
     products.forEach((product) {
+      favorites.forEach((favorite) {
+        if (product.id == favorite.id) {
+          isFavorite = true;
+        }
+      });
       if (product.category == categoryId) {
         list.add(Padding(
           child: Row(
@@ -53,11 +64,11 @@ class _ListProductsViewState extends State<ListProductsView> {
               ),
               IconButton(
                 onPressed: () {
-                  favoriteService.addFavorites(product.name);
+                  favoriteService.addFavorites(product.name, product.id);
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.favorite),
-                color: Colors.blue,
+                color: isFavorite ? Colors.red : Colors.blue,
               ),
               AutoSizeText(
                 '${product.name}',
@@ -70,6 +81,7 @@ class _ListProductsViewState extends State<ListProductsView> {
               EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.04),
         ));
       }
+      isFavorite = false;
     });
     return showDialog(
         context: context,
@@ -79,11 +91,11 @@ class _ListProductsViewState extends State<ListProductsView> {
             ));
   }
 
-  generateCategories(products, categories) {
+  generateCategories(products, categories, favorites) {
     List<Widget> list = [];
     categories.forEach((category) {
       list.add(InkWell(
-        onTap: () => generateProducts(category.id, products),
+        onTap: () => generateProducts(category.id, products, favorites),
         child: Padding(
           child: Row(
             children: <Widget>[
@@ -157,8 +169,10 @@ class _ListProductsViewState extends State<ListProductsView> {
                           ));
                     }
                     if (state is LoadDataState) {
+                      categories = state.categories;
+                      products = state.products;
                       return generateCategories(
-                          state.products, state.categories);
+                          state.products, state.categories, state.favorites);
                     }
                     return Container();
                   },
@@ -180,7 +194,11 @@ class _ListProductsViewState extends State<ListProductsView> {
             height: 10,
           ),
           FloatingActionButton(
-            onPressed: () => Navigator.pushNamed(context, '/create'),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CreateView(
+                        categories: categories, products: products))),
             child: const Icon(Icons.add),
             heroTag: 'btn2',
           ),

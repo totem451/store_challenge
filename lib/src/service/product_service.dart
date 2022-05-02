@@ -18,6 +18,17 @@ class ProductService {
     return products;
   }
 
+  addProducts(name, category, id, imagen) async {
+    var body = {
+      "category": category,
+      "id": id,
+      "imagen": "$imagen",
+      "name": "$name"
+    };
+    var resp = await http.post(Uri.parse(url + 'product.json'), body: body);
+    return resp.statusCode;
+  }
+
   deleteProducts(name) async {
     var resp = await http.delete(Uri.parse(url + 'product/$name.json'));
     return resp.statusCode;

@@ -18,6 +18,12 @@ class CategoryService {
     return categories;
   }
 
+  addCategories(name, color, id) async {
+    var body = {"color": "$color", "id": id, "name": "$name"};
+    var resp = await http.post(Uri.parse(url + 'category.json'));
+    return resp.statusCode;
+  }
+
   deleteCategories(name) async {
     var resp = await http.delete(Uri.parse(url + 'category/$name.json'));
     return resp.statusCode;

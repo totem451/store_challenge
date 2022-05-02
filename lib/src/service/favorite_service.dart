@@ -18,15 +18,18 @@ class FavoriteService {
     return favorites;
   }
 
-  deleteFavorites(name) async {
-    var resp = await http.delete(Uri.parse(url + 'favorite/$name.json'));
+  deleteFavorites(name, id) async {
+    var body = jsonEncode({"id": id, "name": "$name"});
+    var resp = await http.post(Uri.parse(url + 'favorite.json'), body: body);
     return resp.statusCode;
   }
 
-  addFavorites(name) async {
+  addFavorites(name, id) async {
+    var body = {"id": id, "name": "$name"};
+
     var resp = await http.post(
       Uri.parse(url + 'favorite/$name.json'),
-      // body: ,
+      body: body,
     );
     return resp.statusCode;
   }

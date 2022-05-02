@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Store App',
       routes: {
         '/list': (context) => const ListProductsView(),
-        '/create': (context) => CreateView(),
+        // '/create': (context) => CreateView(),
         '/favorites': (context) => FavoritesView(),
       },
       theme: ThemeData(

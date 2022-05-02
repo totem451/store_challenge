@@ -59,7 +59,10 @@ class _FavoritesViewState extends State<FavoritesView> {
               ),
               IconButton(
                 onPressed: () {
-                  productService.deleteProducts(product.name);
+                  isFavorite
+                      ? favoritesService.addFavorites(product.name, product.id)
+                      : favoritesService.deleteFavorites(
+                          product.name, product.id);
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.favorite),
