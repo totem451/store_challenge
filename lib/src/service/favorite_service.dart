@@ -24,7 +24,10 @@ class FavoriteService {
   }
 
   addFavorites(name) async {
-    var resp = await http.post(Uri.parse(url + 'favorite/$name.json'));
+    var resp = await http.post(
+      Uri.parse(url + 'favorite/$name.json'),
+      // body: ,
+    );
     return resp.statusCode;
   }
 }

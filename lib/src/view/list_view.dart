@@ -18,6 +18,7 @@ class ListProductsView extends StatefulWidget {
 class _ListProductsViewState extends State<ListProductsView> {
   final productService = ProductService();
   final categoryService = CategoryService();
+  final favoriteService = FavoriteService();
   late BLOC bloc;
   @override
   void initState() {
@@ -52,7 +53,7 @@ class _ListProductsViewState extends State<ListProductsView> {
               ),
               IconButton(
                 onPressed: () {
-                  productService.deleteProducts(product.name);
+                  favoriteService.addFavorites(product.name);
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.favorite),
