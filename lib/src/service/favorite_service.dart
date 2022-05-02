@@ -4,11 +4,10 @@ import 'package:store_challenge/src/model/models.dart';
 import 'package:http/http.dart' as http;
 
 class FavoriteService {
-  final String url =
-      'https://createthrivestore-default-rtdb.firebaseio.com/favorite.json';
+  final String url = 'https://createthrivestore-default-rtdb.firebaseio.com/';
   Future<List<FavoriteModel>> listFavorites() async {
     List<FavoriteModel> favorites = [];
-    var resp = await http.get(Uri.parse(url));
+    var resp = await http.get(Uri.parse(url + 'favorite.json'));
     if (resp.statusCode == 200) {
       final Map<String, dynamic> favoritesMap = json.decode(resp.body);
       favoritesMap.forEach((key, value) {
@@ -17,5 +16,15 @@ class FavoriteService {
       });
     }
     return favorites;
+  }
+
+  deleteFavorites(name) async {
+    var resp = await http.delete(Uri.parse(url + 'favorite/$name.json'));
+    return resp.statusCode;
+  }
+
+  addFavorites(name) async {
+    var resp = await http.post(Uri.parse(url + 'favorite/$name.json'));
+    return resp.statusCode;
   }
 }
