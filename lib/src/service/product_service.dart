@@ -18,13 +18,13 @@ class ProductService {
     return products;
   }
 
-  addProducts(name, category, id, imagen) async {
-    var body = {
-      "category": category,
+  addProducts(product, id) async {
+    var body = jsonEncode({
+      "category": product.category,
       "id": id,
-      "imagen": "$imagen",
-      "name": "$name"
-    };
+      "image": "${product.image}",
+      "name": "${product.name}"
+    });
     var resp = await http.post(Uri.parse(url + 'product.json'), body: body);
     return resp.statusCode;
   }

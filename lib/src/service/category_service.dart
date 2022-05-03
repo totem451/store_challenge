@@ -18,9 +18,10 @@ class CategoryService {
     return categories;
   }
 
-  addCategories(name, color, id) async {
-    var body = {"color": "$color", "id": id, "name": "$name"};
-    var resp = await http.post(Uri.parse(url + 'category.json'));
+  addCategories(category, id) async {
+    var body = jsonEncode(
+        {"color": "${category.color}", "id": id, "name": "${category.name}"});
+    var resp = await http.post(Uri.parse(url + 'category.json'), body: body);
     return resp.statusCode;
   }
 

@@ -20,6 +20,8 @@ class _CreateViewState extends State<CreateView> {
   TextEditingController pNameInput = TextEditingController();
   TextEditingController pImageInput = TextEditingController();
   TextEditingController pCategoryInput = TextEditingController();
+  ProductModel product = ProductModel();
+  CategoryModel category = CategoryModel();
   bool isSwitched = false;
 
   void toggleSwitch(bool value) {
@@ -34,13 +36,11 @@ class _CreateViewState extends State<CreateView> {
     }
   }
 
-  category() {
+  categoryF() {
     return Column(children: [
       Center(
           child: TextFormField(
-        onFieldSubmitted: (value) {
-          cNameInput.value = TextEditingValue(text: value);
-        },
+        onChanged: (value) => category.name = value,
         controller: cNameInput,
         decoration: InputDecoration(
             labelText: 'Enter name',
@@ -48,9 +48,7 @@ class _CreateViewState extends State<CreateView> {
       )),
       Center(
           child: TextFormField(
-        onFieldSubmitted: (value) {
-          cColorInput.value = TextEditingValue(text: value);
-        },
+        onChanged: (value) => category.color = value,
         controller: cColorInput,
         decoration: InputDecoration(
           labelText: 'Enter color (hexadecimal)',
@@ -60,13 +58,11 @@ class _CreateViewState extends State<CreateView> {
     ]);
   }
 
-  product() {
+  productF() {
     return Column(children: [
       Center(
           child: TextFormField(
-        onFieldSubmitted: (value) {
-          pNameInput.value = TextEditingValue(text: value);
-        },
+        onChanged: (value) => product.name = value,
         controller: pNameInput,
         decoration: InputDecoration(
             labelText: 'Enter name',
@@ -74,9 +70,7 @@ class _CreateViewState extends State<CreateView> {
       )),
       Center(
           child: TextFormField(
-        onFieldSubmitted: (value) {
-          pCategoryInput.value = TextEditingValue(text: value);
-        },
+        onChanged: (value) => product.category = int.parse(value),
         controller: pCategoryInput,
         decoration: InputDecoration(
           labelText: 'Enter category',
@@ -85,9 +79,7 @@ class _CreateViewState extends State<CreateView> {
       )),
       Center(
           child: TextFormField(
-        onFieldSubmitted: (value) {
-          pImageInput.value = TextEditingValue(text: value);
-        },
+        onChanged: (value) => product.image = value,
         controller: pImageInput,
         decoration: InputDecoration(
           labelText: 'Enter image',
@@ -132,7 +124,7 @@ class _CreateViewState extends State<CreateView> {
             Divider(color: Colors.blue, thickness: 1.5),
             SizedBox(height: 30),
             // Text('hola', style: TextStyle(color: Colors.red)),
-            isSwitched ? category() : product(),
+            isSwitched ? categoryF() : productF(),
           ],
         ),
       ),
@@ -164,10 +156,8 @@ class _CreateViewState extends State<CreateView> {
           });
           if (!pNameIsUsed || !cNameIsUsed) {
             isSwitched
-                ? categoryService.addCategories(
-                    cNameInput.value.text, cColorInput.value.text, cId)
-                : productService.addProducts(pNameInput.value.text,
-                    pCategoryInput.value.text, pId, pImageInput.value.text);
+                ? categoryService.addCategories(category, cId)
+                : productService.addProducts(product, pId);
             isSwitched
                 ? SnackBar(content: Text('Category $cNameInput is generated'))
                 : SnackBar(content: Text('Product $pNameInput is generated'));
