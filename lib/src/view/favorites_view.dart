@@ -99,16 +99,16 @@ class _FavoritesViewState extends State<FavoritesView> {
               Padding(
                 child: Row(
                   children: [
-                    IconButton(
-                      onPressed: () {
-                        categoryService.deleteCategories(category.name);
-                        bloc.add(LoadDataEvent());
-                      },
-                      icon: Icon(Icons.delete),
-                      color: Colors.red,
-                    ),
+                    // IconButton(
+                    //   onPressed: () {
+                    //     categoryService.deleteCategories(category.name);
+                    //     bloc.add(LoadDataEvent());
+                    //   },
+                    //   icon: Icon(Icons.delete),
+                    //   color: Colors.red,
+                    // ),
                     AutoSizeText(
-                      '${category.name}',
+                      '   ${category.name}',
                       minFontSize: 5,
                       style: TextStyle(
                           fontFamily: "Roboto",
