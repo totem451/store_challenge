@@ -59,13 +59,13 @@ class _FavoritesViewState extends State<FavoritesView> {
               // ),
               IconButton(
                 onPressed: () {
-                  isFavorite
+                  !isFavorite
                       ? favoritesService.addFavorites(product.name)
                       : favoritesService.deleteFavorites(product.name);
-                  isFavorite
+                  !isFavorite
                       ? SnackBar(
                           content: Text(
-                              'Product ${product.name} is deleted from favorites',
+                              'Product ${product.name} is added from favorites',
                               style: TextStyle(color: Colors.white)))
                       : SnackBar(
                           content: Text(

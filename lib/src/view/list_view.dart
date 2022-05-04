@@ -67,7 +67,18 @@ class _ListProductsViewState extends State<ListProductsView> {
               ),
               IconButton(
                 onPressed: () {
-                  favoriteService.addFavorites(product.name);
+                  !isFavorite
+                      ? favoriteService.addFavorites(product.name)
+                      : favoriteService.deleteFavorites(product.name);
+                  !isFavorite
+                      ? SnackBar(
+                          content: Text(
+                              'Product ${product.name} is added from favorites',
+                              style: TextStyle(color: Colors.white)))
+                      : SnackBar(
+                          content: Text(
+                              'Product ${product.name} is deleted from favorites',
+                              style: TextStyle(color: Colors.white)));
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.favorite),
