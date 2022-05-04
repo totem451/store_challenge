@@ -5,13 +5,11 @@ class ProductModel {
     this.name,
     this.image,
     this.category,
-    this.id,
   });
 
   String? name;
   String? image;
-  int? category;
-  int? id;
+  String? category;
 
   factory ProductModel.fromJson(String str) =>
       ProductModel.fromMap(json.decode(str));
@@ -22,20 +20,17 @@ class ProductModel {
         name: json["name"],
         image: json["image"],
         category: json["category"],
-        id: json["id"],
       );
 
   Map<String, dynamic> toMap() => {
         "name": name,
         "image": image,
         "category": category,
-        "id": id,
       };
 
   ProductModel copy() => ProductModel(
         name: this.name,
         image: this.image,
         category: this.category,
-        id: this.id,
       );
 }

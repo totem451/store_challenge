@@ -18,10 +18,9 @@ class ProductService {
     return products;
   }
 
-  addProducts(product, id) async {
+  addProducts(product) async {
     var body = jsonEncode({
       "category": product.category,
-      "id": id,
       "image": "${product.image}",
       "name": "${product.name}"
     });

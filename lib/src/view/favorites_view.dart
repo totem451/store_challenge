@@ -36,31 +36,31 @@ class _FavoritesViewState extends State<FavoritesView> {
     }
   }
 
-  generateProducts(categoryId, products, favorites) {
+  generateProducts(categoryName, products, favorites) {
     List<Widget> list = [];
     bool isFavorite = false;
     products.forEach((product) {
       favorites.forEach((favorite) {
-        if (product.id == favorite.id) {
+        if (product.name == favorite.name) {
           isFavorite = true;
         }
       });
-      if (product.category == categoryId && isFavorite) {
+      if (product.category == categoryName && isFavorite) {
         list.add(Padding(
           child: Row(
             children: [
-              IconButton(
-                onPressed: () {
-                  productService.deleteProducts(product.name);
-                  bloc.add(LoadDataEvent());
-                },
-                icon: Icon(Icons.delete),
-                color: Colors.red,
-              ),
+              // IconButton(
+              //   onPressed: () {
+              //     productService.deleteProducts(product.name);
+              //     bloc.add(LoadDataEvent());
+              //   },
+              //   icon: Icon(Icons.delete),
+              //   color: Colors.red,
+              // ),
               IconButton(
                 onPressed: () {
                   isFavorite
-                      ? favoritesService.addFavorites(product.name, product.id)
+                      ? favoritesService.addFavorites(product.name)
                       : favoritesService.deleteFavorites(product.name);
                   bloc.add(LoadDataEvent());
                 },
@@ -92,7 +92,7 @@ class _FavoritesViewState extends State<FavoritesView> {
     List<Widget> list = [];
     categories.forEach((category) {
       list.add(InkWell(
-        onTap: () => generateProducts(category.id, products, favorites),
+        onTap: () => generateProducts(category.name, products, favorites),
         child: Padding(
           child: Row(
             children: <Widget>[

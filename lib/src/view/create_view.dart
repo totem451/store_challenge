@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_challenge/src/bloc/bloc.dart';
 import 'package:store_challenge/src/model/models.dart';
 import 'package:store_challenge/src/service/services.dart';
 
@@ -23,6 +25,13 @@ class _CreateViewState extends State<CreateView> {
   ProductModel product = ProductModel();
   CategoryModel category = CategoryModel();
   bool isSwitched = false;
+  late BLOC bloc;
+
+  void initState() {
+    bloc = new BLOC(StateS());
+    bloc.add(LoadDataEvent());
+    super.initState();
+  }
 
   void toggleSwitch(bool value) {
     if (isSwitched == false) {
@@ -70,7 +79,7 @@ class _CreateViewState extends State<CreateView> {
       )),
       Center(
           child: TextFormField(
-        onChanged: (value) => product.category = int.parse(value),
+        onChanged: (value) => product.category = value,
         controller: pCategoryInput,
         decoration: InputDecoration(
           labelText: 'Enter category',
@@ -101,63 +110,57 @@ class _CreateViewState extends State<CreateView> {
       ),
       body: Container(
         color: Color.fromARGB(255, 46, 46, 46),
-        child: ListView(
-          children: [
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Switch(
-                  onChanged: toggleSwitch,
-                  value: isSwitched,
-                  activeColor: Colors.blue,
-                  activeTrackColor: Colors.blueGrey,
-                  inactiveThumbColor: Colors.redAccent,
-                  inactiveTrackColor: Colors.redAccent,
-                ),
-                Text(
-                  isSwitched ? 'Category' : 'Product',
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
-            ),
-            Divider(color: Colors.blue, thickness: 1.5),
-            SizedBox(height: 30),
-            // Text('hola', style: TextStyle(color: Colors.red)),
-            isSwitched ? categoryF() : productF(),
-          ],
+        child: BlocListener(
+          bloc: bloc,
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          child: ListView(
+            children: [
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Switch(
+                    onChanged: toggleSwitch,
+                    value: isSwitched,
+                    activeColor: Colors.blue,
+                    activeTrackColor: Colors.blueGrey,
+                    inactiveThumbColor: Colors.redAccent,
+                    inactiveTrackColor: Colors.redAccent,
+                  ),
+                  Text(
+                    isSwitched ? 'Category' : 'Product',
+                    style: TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+              Divider(color: Colors.blue, thickness: 1.5),
+              SizedBox(height: 30),
+              // Text('hola', style: TextStyle(color: Colors.red)),
+              isSwitched ? categoryF() : productF(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          int cId = 0;
-          int cLastId = 0;
-          int pId = 0;
-          int pLastId = 0;
           bool cNameIsUsed = false;
           bool pNameIsUsed = false;
           widget.categories.forEach((c) {
-            if (c.id! >= cLastId) {
-              cId = c.id!;
-            }
-            cLastId = c.id!;
             if (c.name == cNameInput.value.text) {
               cNameIsUsed = true;
             }
           });
           widget.products.forEach((p) {
-            if (p.id! >= pLastId) {
-              pId = p.id!;
-            }
-            pLastId = p.id!;
             if (p.name == cNameInput.value.text) {
               pNameIsUsed = true;
             }
           });
           if (!pNameIsUsed || !cNameIsUsed) {
             isSwitched
-                ? categoryService.addCategories(category, cId)
-                : productService.addProducts(product, pId);
+                ? categoryService.addCategories(category)
+                : productService.addProducts(product);
             isSwitched
                 ? SnackBar(content: Text('Category $cNameInput is generated'))
                 : SnackBar(content: Text('Product $pNameInput is generated'));
@@ -170,6 +173,7 @@ class _CreateViewState extends State<CreateView> {
                     content: Text(
                         'Product name $pNameInput is used, please use other'));
           }
+          bloc.add(LoadDataEvent());
         },
         child: const Icon(Icons.check),
       ),

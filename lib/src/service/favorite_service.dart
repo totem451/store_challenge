@@ -23,8 +23,8 @@ class FavoriteService {
     return resp.statusCode;
   }
 
-  addFavorites(name, id) async {
-    var body = jsonEncode({"id": id, "name": "$name"});
+  addFavorites(name) async {
+    var body = jsonEncode({"name": "$name"});
 
     var resp = await http.post(
       Uri.parse(url + 'favorite.json'),

@@ -41,16 +41,16 @@ class _ListProductsViewState extends State<ListProductsView> {
     }
   }
 
-  generateProducts(categoryId, products, favorites) {
+  generateProducts(categoryName, products, favorites) {
     List<Widget> list = [];
     bool isFavorite = false;
     products.forEach((product) {
       favorites.forEach((favorite) {
-        if (product.id == favorite.id) {
+        if (product.name == favorite.name) {
           isFavorite = true;
         }
       });
-      if (product.category == categoryId) {
+      if (product.category == categoryName) {
         list.add(Padding(
           child: Row(
             children: [
@@ -64,7 +64,7 @@ class _ListProductsViewState extends State<ListProductsView> {
               ),
               IconButton(
                 onPressed: () {
-                  favoriteService.addFavorites(product.name, product.id);
+                  favoriteService.addFavorites(product.name);
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.favorite),
@@ -95,7 +95,7 @@ class _ListProductsViewState extends State<ListProductsView> {
     List<Widget> list = [];
     categories.forEach((category) {
       list.add(InkWell(
-        onTap: () => generateProducts(category.id, products, favorites),
+        onTap: () => generateProducts(category.name, products, favorites),
         child: Padding(
           child: Row(
             children: <Widget>[
