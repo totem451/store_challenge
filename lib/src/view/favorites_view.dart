@@ -62,6 +62,15 @@ class _FavoritesViewState extends State<FavoritesView> {
                   isFavorite
                       ? favoritesService.addFavorites(product.name)
                       : favoritesService.deleteFavorites(product.name);
+                  isFavorite
+                      ? SnackBar(
+                          content: Text(
+                              'Product ${product.name} is deleted from favorites',
+                              style: TextStyle(color: Colors.white)))
+                      : SnackBar(
+                          content: Text(
+                              'Product ${product.name} is deleted from favorites',
+                              style: TextStyle(color: Colors.white)));
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.favorite),

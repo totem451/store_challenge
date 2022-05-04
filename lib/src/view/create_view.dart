@@ -162,16 +162,22 @@ class _CreateViewState extends State<CreateView> {
                 ? categoryService.addCategories(category)
                 : productService.addProducts(product);
             isSwitched
-                ? SnackBar(content: Text('Category $cNameInput is generated'))
-                : SnackBar(content: Text('Product $pNameInput is generated'));
+                ? SnackBar(
+                    content: Text('Category $cNameInput is generated',
+                        style: TextStyle(color: Colors.white)))
+                : SnackBar(
+                    content: Text('Product $pNameInput is generated',
+                        style: TextStyle(color: Colors.white)));
           } else {
             isSwitched
                 ? SnackBar(
                     content: Text(
-                        'Category name $cNameInput is used, please use other'))
+                        'Category name $cNameInput is used, please use other',
+                        style: TextStyle(color: Colors.white)))
                 : SnackBar(
                     content: Text(
-                        'Product name $pNameInput is used, please use other'));
+                        'Product name $pNameInput is used, please use other',
+                        style: TextStyle(color: Colors.white)));
           }
           bloc.add(LoadDataEvent());
         },

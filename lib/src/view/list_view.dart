@@ -57,6 +57,9 @@ class _ListProductsViewState extends State<ListProductsView> {
               IconButton(
                 onPressed: () {
                   productService.deleteProducts(product.name);
+                  SnackBar(
+                      content: Text('Product ${product.name} is deleted',
+                          style: TextStyle(color: Colors.white)));
                   bloc.add(LoadDataEvent());
                 },
                 icon: Icon(Icons.delete),
@@ -105,6 +108,10 @@ class _ListProductsViewState extends State<ListProductsView> {
                     IconButton(
                       onPressed: () {
                         categoryService.deleteCategories(category.name);
+                        SnackBar(
+                            content: Text(
+                                'Category ${category.name} is deleted',
+                                style: TextStyle(color: Colors.white)));
                         bloc.add(LoadDataEvent());
                       },
                       icon: Icon(Icons.delete),
